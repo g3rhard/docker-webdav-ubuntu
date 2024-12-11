@@ -60,6 +60,9 @@ main() {
   # Generate Apache configuration
   generate_apache_config
 
+  # Health check
+  echo "ok" >/var/www/html/health.txt
+
   # Start Apache
   start_apache
 }

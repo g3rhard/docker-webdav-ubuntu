@@ -14,7 +14,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/*
 
 # Enable necessary Apache modules
-RUN a2enmod dav dav_fs authn_file auth_basic authnz_ldap proxy proxy_http
+RUN a2enmod dav dav_fs authn_file auth_basic authnz_ldap proxy proxy_http headers
 
 # Create WebDAV directory and set permissions
 RUN mkdir -p /var/www/webdav && \
@@ -38,5 +38,5 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 # Expose port 80
 EXPOSE 80
 
-# Add health check with HTTP Basic Authentication
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f -u "${WEBDAV_USER}:${WEBDAV_PASSWORD}" http://localhost:80/ || exit 1
+# Add health check targeting the /health endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD curl -f http://localhost:80/health || exit 1
