@@ -1,0 +1,5 @@
+overrides:
+  - files: "*.sh"
+    options:
+      tabWidth: 2
+      useTabs: false
