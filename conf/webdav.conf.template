@@ -1,0 +1,23 @@
+# Set the DocumentRoot to the WebDAV directory
+DocumentRoot "/var/www/webdav"
+<Directory "/var/www/webdav">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+# Redirect all requests to the WebDAV service at "/"
+<Location "/">
+    DAV On
+    AuthType Basic
+    AuthName "Restricted WebDAV"
+    AuthBasicProvider file ldap
+    AuthUserFile /etc/apache2/webdav.htpasswd
+    AuthLDAPURL "${LDAP_URL}"
+    AuthLDAPBindDN "${LDAP_BIND_DN}"
+    AuthLDAPBindPassword "${LDAP_BIND_PASSWORD}"
+    Require valid-user
+</Location>
+
+# Specify lock database file in a secure location
+DAVLockDB "/var/lock/apache2/DAVLockDB"
