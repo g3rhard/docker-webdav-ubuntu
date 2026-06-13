@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/library/ubuntu:noble
+FROM docker.io/library/ubuntu:resolute
 
 # Install Apache, WebDAV, and related modules
 RUN apt-get update -qq && \
